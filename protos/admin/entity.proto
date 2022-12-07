@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+option go_package = "github.com/Yosorable/ms-shared/protoc_gen/admin";
+
+package admin;
+
+message User {
+  int32 id = 1;
+  string username = 2;
+  string created_at = 3;
+  string updated_at = 4;
+}

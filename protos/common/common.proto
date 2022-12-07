@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option go_package = "github.com/Yosorable/ms-shared/protoc_gen/common";
+
+package common;
+
+message Test {
+  
+}
