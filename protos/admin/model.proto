@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+option go_package = "github.com/Yosorable/ms-shared/protoc_gen/admin";
+
+import "protos/common/common.proto";
+
+package admin;
+
+message User {
+  int32 id = 1;
+  string username = 2;
+  common.TimeInfo time_info = 3;
+}
+
+message UserRecordTableOption {
+  string service_name = 1;
+  string table_tag = 2;
+  string foreign_id_name = 3;
+}
+
+message OrderBy {
+  enum Order {
+    ASC = 0;
+    DESC = 1;
+  }
+  string order_by_filed_name = 1;
+  Order order = 2;
+}
+
+message PageOption {
+  int32 limit = 1;
+  int32 offset = 2;
+}
+
+message QueryUserRecordOption {
+  int32 user_id = 1;
+  repeated int32 foreign_id_list = 2;
+  repeated OrderBy order_by_list = 3;
+  PageOption page_option = 4;
+}

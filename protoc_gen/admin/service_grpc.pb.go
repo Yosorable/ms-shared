@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.21.10
-// source: protos/admin/admin.proto
+// source: protos/admin/service.proto
 
 package admin
 
@@ -22,10 +22,16 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AdminClient interface {
+	// 用户基础功能接口
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginReply, error)
 	CheckToken(ctx context.Context, in *CheckTokenRequest, opts ...grpc.CallOption) (*CheckTokenReply, error)
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterReply, error)
 	GetUserByID(ctx context.Context, in *GetUserByIDRequest, opts ...grpc.CallOption) (*GetUserByIDReply, error)
+	// 用户记录(用户与其它实体的多对多关系表)表相关接口，提供给其它依赖用户模块的服务
+	CreateUserRecordTableIfNotExist(ctx context.Context, in *CreateUserRecordTableIfNotExistRequest, opts ...grpc.CallOption) (*CreateUserRecordTableIfNotExistReply, error)
+	QueryUserRecord(ctx context.Context, in *QueryUserRecordRequest, opts ...grpc.CallOption) (*QueryUserRecordReply, error)
+	CreateOrUpdateUserRecord(ctx context.Context, in *CreateOrUpdateUserRecordRequest, opts ...grpc.CallOption) (*CreateOrUpdateUserRecordReply, error)
+	DeleteUserRecord(ctx context.Context, in *DeleteUserRecordRequest, opts ...grpc.CallOption) (*DeleteUserRecordReply, error)
 }
 
 type adminClient struct {
@@ -72,14 +78,56 @@ func (c *adminClient) GetUserByID(ctx context.Context, in *GetUserByIDRequest, o
 	return out, nil
 }
 
+func (c *adminClient) CreateUserRecordTableIfNotExist(ctx context.Context, in *CreateUserRecordTableIfNotExistRequest, opts ...grpc.CallOption) (*CreateUserRecordTableIfNotExistReply, error) {
+	out := new(CreateUserRecordTableIfNotExistReply)
+	err := c.cc.Invoke(ctx, "/admin.Admin/CreateUserRecordTableIfNotExist", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) QueryUserRecord(ctx context.Context, in *QueryUserRecordRequest, opts ...grpc.CallOption) (*QueryUserRecordReply, error) {
+	out := new(QueryUserRecordReply)
+	err := c.cc.Invoke(ctx, "/admin.Admin/QueryUserRecord", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) CreateOrUpdateUserRecord(ctx context.Context, in *CreateOrUpdateUserRecordRequest, opts ...grpc.CallOption) (*CreateOrUpdateUserRecordReply, error) {
+	out := new(CreateOrUpdateUserRecordReply)
+	err := c.cc.Invoke(ctx, "/admin.Admin/CreateOrUpdateUserRecord", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) DeleteUserRecord(ctx context.Context, in *DeleteUserRecordRequest, opts ...grpc.CallOption) (*DeleteUserRecordReply, error) {
+	out := new(DeleteUserRecordReply)
+	err := c.cc.Invoke(ctx, "/admin.Admin/DeleteUserRecord", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AdminServer is the server API for Admin service.
 // All implementations must embed UnimplementedAdminServer
 // for forward compatibility
 type AdminServer interface {
+	// 用户基础功能接口
 	Login(context.Context, *LoginRequest) (*LoginReply, error)
 	CheckToken(context.Context, *CheckTokenRequest) (*CheckTokenReply, error)
 	Register(context.Context, *RegisterRequest) (*RegisterReply, error)
 	GetUserByID(context.Context, *GetUserByIDRequest) (*GetUserByIDReply, error)
+	// 用户记录(用户与其它实体的多对多关系表)表相关接口，提供给其它依赖用户模块的服务
+	CreateUserRecordTableIfNotExist(context.Context, *CreateUserRecordTableIfNotExistRequest) (*CreateUserRecordTableIfNotExistReply, error)
+	QueryUserRecord(context.Context, *QueryUserRecordRequest) (*QueryUserRecordReply, error)
+	CreateOrUpdateUserRecord(context.Context, *CreateOrUpdateUserRecordRequest) (*CreateOrUpdateUserRecordReply, error)
+	DeleteUserRecord(context.Context, *DeleteUserRecordRequest) (*DeleteUserRecordReply, error)
 	mustEmbedUnimplementedAdminServer()
 }
 
@@ -98,6 +146,18 @@ func (UnimplementedAdminServer) Register(context.Context, *RegisterRequest) (*Re
 }
 func (UnimplementedAdminServer) GetUserByID(context.Context, *GetUserByIDRequest) (*GetUserByIDReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserByID not implemented")
+}
+func (UnimplementedAdminServer) CreateUserRecordTableIfNotExist(context.Context, *CreateUserRecordTableIfNotExistRequest) (*CreateUserRecordTableIfNotExistReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateUserRecordTableIfNotExist not implemented")
+}
+func (UnimplementedAdminServer) QueryUserRecord(context.Context, *QueryUserRecordRequest) (*QueryUserRecordReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryUserRecord not implemented")
+}
+func (UnimplementedAdminServer) CreateOrUpdateUserRecord(context.Context, *CreateOrUpdateUserRecordRequest) (*CreateOrUpdateUserRecordReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateOrUpdateUserRecord not implemented")
+}
+func (UnimplementedAdminServer) DeleteUserRecord(context.Context, *DeleteUserRecordRequest) (*DeleteUserRecordReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteUserRecord not implemented")
 }
 func (UnimplementedAdminServer) mustEmbedUnimplementedAdminServer() {}
 
@@ -184,6 +244,78 @@ func _Admin_GetUserByID_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Admin_CreateUserRecordTableIfNotExist_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateUserRecordTableIfNotExistRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).CreateUserRecordTableIfNotExist(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/admin.Admin/CreateUserRecordTableIfNotExist",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).CreateUserRecordTableIfNotExist(ctx, req.(*CreateUserRecordTableIfNotExistRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_QueryUserRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryUserRecordRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).QueryUserRecord(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/admin.Admin/QueryUserRecord",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).QueryUserRecord(ctx, req.(*QueryUserRecordRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_CreateOrUpdateUserRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateOrUpdateUserRecordRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).CreateOrUpdateUserRecord(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/admin.Admin/CreateOrUpdateUserRecord",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).CreateOrUpdateUserRecord(ctx, req.(*CreateOrUpdateUserRecordRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_DeleteUserRecord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteUserRecordRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).DeleteUserRecord(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/admin.Admin/DeleteUserRecord",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).DeleteUserRecord(ctx, req.(*DeleteUserRecordRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Admin_ServiceDesc is the grpc.ServiceDesc for Admin service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -207,7 +339,23 @@ var Admin_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "GetUserByID",
 			Handler:    _Admin_GetUserByID_Handler,
 		},
+		{
+			MethodName: "CreateUserRecordTableIfNotExist",
+			Handler:    _Admin_CreateUserRecordTableIfNotExist_Handler,
+		},
+		{
+			MethodName: "QueryUserRecord",
+			Handler:    _Admin_QueryUserRecord_Handler,
+		},
+		{
+			MethodName: "CreateOrUpdateUserRecord",
+			Handler:    _Admin_CreateOrUpdateUserRecord_Handler,
+		},
+		{
+			MethodName: "DeleteUserRecord",
+			Handler:    _Admin_DeleteUserRecord_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "protos/admin/admin.proto",
+	Metadata: "protos/admin/service.proto",
 }

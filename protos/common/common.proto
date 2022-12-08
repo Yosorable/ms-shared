@@ -4,6 +4,7 @@ option go_package = "github.com/Yosorable/ms-shared/protoc_gen/common";
 
 package common;
 
-message Test {
-  
+message TimeInfo {
+    string created_at = 1;
+    string updated_at = 2;
 }
