@@ -50,7 +50,10 @@ message CreateUserRecordTableIfNotExistReply {
 
 message QueryUserRecordRequest {
   UserRecordTableOption table_option = 1;
-  QueryUserRecordOption query_option = 2;
+  int32 user_id = 2;
+  repeated int32 foreign_id_list = 3;
+  repeated OrderBy order_by_list = 4;
+  PageOption page_option = 5;
 }
 
 message QueryUserRecordReply {

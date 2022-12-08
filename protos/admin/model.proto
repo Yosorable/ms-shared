@@ -31,10 +31,3 @@ message PageOption {
   int32 limit = 1;
   int32 offset = 2;
 }
-
-message QueryUserRecordOption {
-  int32 user_id = 1;
-  repeated int32 foreign_id_list = 2;
-  repeated OrderBy order_by_list = 3;
-  PageOption page_option = 4;
-}
