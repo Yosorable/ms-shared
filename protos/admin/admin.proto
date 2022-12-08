@@ -2,7 +2,7 @@ syntax = "proto3";
 
 option go_package = "github.com/Yosorable/ms-shared/protoc_gen/admin";
 
-import "protos/admin/entity.proto";
+import "protos/admin/dto.proto";
 
 package admin;
 
@@ -11,39 +11,4 @@ service Admin {
   rpc CheckToken (CheckTokenRequest) returns (CheckTokenReply) {}
   rpc Register (RegisterRequest) returns (RegisterReply) {}
   rpc GetUserByID (GetUserByIDRequest) returns (GetUserByIDReply) {}
-}
-
-message LoginRequest {
-  string username = 1;
-  string password = 2;
-}
-
-message LoginReply {
-  User user = 1;
-  string jwt_token = 2;
-}
-
-message CheckTokenRequest {
-  string jwt_token = 1;
-}
-
-message CheckTokenReply {
-  User user = 1;
-  string new_token = 2;
-}
-
-message RegisterRequest {
-  string username = 1;
-  string password = 2;
-}
-
-message RegisterReply {
-}
-
-message GetUserByIDRequest {
-  int32 id = 1;
-}
-
-message GetUserByIDReply {
-  User user = 1;
 }
