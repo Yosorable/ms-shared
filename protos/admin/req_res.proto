@@ -57,7 +57,7 @@ message QueryUserRecordRequest {
 }
 
 message QueryUserRecordReply {
-  repeated int32 foreign_id_list = 1;
+  repeated UserRecord records = 1;
   int32 total = 2;
 }
 
