@@ -34,7 +34,7 @@ message PageOption {
 
 message UserRecord {
   int32 user_id = 1;
-  int32 foreugn_id = 2;
+  int32 foreign_id = 2;
   string created_at = 3;
   string updated_at = 4;
 }
