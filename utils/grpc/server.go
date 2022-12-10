@@ -19,8 +19,8 @@ import (
 // 本地运行rpc、consul，consul使用默认端口
 func RunRpcServerInLocalHost(
 	serviceName string,
-	reigsterServerFunc func(*ggrpc.Server),
-	gracefullyStopFuncs ...func(),
+	grpcServer *ggrpc.Server,
+	gracefulStopFuncs ...func(),
 ) error {
 	// 随机分配端口
 	lis, err := net.Listen("tcp", "127.0.0.1:0")
@@ -28,13 +28,10 @@ func RunRpcServerInLocalHost(
 		return err
 	}
 	port := lis.Addr().(*net.TCPAddr).Port
-	s := ggrpc.NewServer()
 
 	// 健康检查
 	healthcheck := health.NewServer()
-	healthpb.RegisterHealthServer(s, healthcheck)
-
-	reigsterServerFunc(s)
+	healthpb.RegisterHealthServer(grpcServer, healthcheck)
 
 	consul, err := consul.NewConsul("127.0.0.1:8500")
 	if err != nil {
@@ -45,17 +42,18 @@ func RunRpcServerInLocalHost(
 	quit := make(chan os.Signal, 1)
 	go func() {
 		log.Printf("[%s] server listening at %v", serviceName, lis.Addr())
-		if err := s.Serve(lis); err != nil {
+		if err := grpcServer.Serve(lis); err != nil {
 			log.Printf("[%s] failed to serve: %v", serviceName, err)
 			quit <- syscall.SIGINT
 		}
 	}()
 
-	gracefullyStopFuncs = append(gracefullyStopFuncs, func() {
+	gracefulStopFuncs = append(gracefulStopFuncs, func() {
 		consul.Deregister(fmt.Sprintf("%s-%s-%d", serviceName, "127.0.0.1", port))
+		grpcServer.GracefulStop()
 	})
 
-	utils.WaitForGracefullyStop(quit, gracefullyStopFuncs...)
+	utils.WaitForGracefullyStop(quit, gracefulStopFuncs...)
 
 	return nil
 }
