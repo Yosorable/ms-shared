@@ -7,10 +7,27 @@ package metadata;
 message CreateObjRequest {
   string name = 1;
   string description = 2;
+  repeated ObjField fields = 3;
+  repeated ObjIndex obj_index = 4;
+
+  message ObjIndex {
+    repeated string obj_field_names = 1;
+    IndexType index_type = 2;
+
+    enum IndexType {
+      UNSET_NOTALLOW = 0; // 占位, 不允许使用
+      COMMON = 1;
+      UNIQUE = 2;
+    }
+  }
 
   message ObjField {
     string name = 1;
-
+    FieldType field_type = 2;
+    int32 lookup_obj_id = 3;
+    string description = 4;
+    bool is_allow_null = 5;
+    
     enum FieldType {
       UNSET_NOTALLOW = 0; // 占位, 不允许使用
       ID = 1; // 本对象的id, 无符号自增int
@@ -21,25 +38,7 @@ message CreateObjRequest {
       TEXT = 6; // text
       DATETIME = 7; // datetime
     }
-    FieldType field_type = 2;
-
-    int32 lookup_obj_id = 3;
-    string description = 4;
-    bool is_allow_null = 5;
   }
-  repeated ObjField fields = 3;
-
-  message ObjIndex {
-    repeated string obj_field_names = 1;
-
-    enum IndexType {
-      UNSET_NOTALLOW = 0; // 占位, 不允许使用
-      COMMON = 1;
-      UNIQUE = 2;
-    }
-    IndexType index_type = 2;
-  }
-  repeated ObjIndex obj_index = 4;
 }
 
 message CreateObjReply {}
