@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MetadataClient interface {
-	SayHello(ctx context.Context, in *SayHelloRequest, opts ...grpc.CallOption) (*SayHelloReply, error)
+	CreateObj(ctx context.Context, in *CreateObjRequest, opts ...grpc.CallOption) (*CreateObjReply, error)
 }
 
 type metadataClient struct {
@@ -33,9 +33,9 @@ func NewMetadataClient(cc grpc.ClientConnInterface) MetadataClient {
 	return &metadataClient{cc}
 }
 
-func (c *metadataClient) SayHello(ctx context.Context, in *SayHelloRequest, opts ...grpc.CallOption) (*SayHelloReply, error) {
-	out := new(SayHelloReply)
-	err := c.cc.Invoke(ctx, "/metadata.Metadata/SayHello", in, out, opts...)
+func (c *metadataClient) CreateObj(ctx context.Context, in *CreateObjRequest, opts ...grpc.CallOption) (*CreateObjReply, error) {
+	out := new(CreateObjReply)
+	err := c.cc.Invoke(ctx, "/metadata.Metadata/CreateObj", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ func (c *metadataClient) SayHello(ctx context.Context, in *SayHelloRequest, opts
 // All implementations must embed UnimplementedMetadataServer
 // for forward compatibility
 type MetadataServer interface {
-	SayHello(context.Context, *SayHelloRequest) (*SayHelloReply, error)
+	CreateObj(context.Context, *CreateObjRequest) (*CreateObjReply, error)
 	mustEmbedUnimplementedMetadataServer()
 }
 
@@ -54,8 +54,8 @@ type MetadataServer interface {
 type UnimplementedMetadataServer struct {
 }
 
-func (UnimplementedMetadataServer) SayHello(context.Context, *SayHelloRequest) (*SayHelloReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SayHello not implemented")
+func (UnimplementedMetadataServer) CreateObj(context.Context, *CreateObjRequest) (*CreateObjReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateObj not implemented")
 }
 func (UnimplementedMetadataServer) mustEmbedUnimplementedMetadataServer() {}
 
@@ -70,20 +70,20 @@ func RegisterMetadataServer(s grpc.ServiceRegistrar, srv MetadataServer) {
 	s.RegisterService(&Metadata_ServiceDesc, srv)
 }
 
-func _Metadata_SayHello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SayHelloRequest)
+func _Metadata_CreateObj_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateObjRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MetadataServer).SayHello(ctx, in)
+		return srv.(MetadataServer).CreateObj(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/metadata.Metadata/SayHello",
+		FullMethod: "/metadata.Metadata/CreateObj",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MetadataServer).SayHello(ctx, req.(*SayHelloRequest))
+		return srv.(MetadataServer).CreateObj(ctx, req.(*CreateObjRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -96,8 +96,8 @@ var Metadata_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*MetadataServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "SayHello",
-			Handler:    _Metadata_SayHello_Handler,
+			MethodName: "CreateObj",
+			Handler:    _Metadata_CreateObj_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
