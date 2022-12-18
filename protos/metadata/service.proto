@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option go_package = "github.com/Yosorable/ms-shared/protoc_gen/metadata";
+
+package metadata;
+
+service Metadata {
+  rpc SayHello (SayHelloRequest) returns (SayHelloReply) {}
+}
+
+message SayHelloRequest {}
+
+message SayHelloReply {}
