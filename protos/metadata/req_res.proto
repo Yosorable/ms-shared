@@ -39,7 +39,7 @@ message CreateObjRequest {
     }
     IndexType index_type = 2;
   }
-  repeated ObjIndex index_types = 4;
+  repeated ObjIndex obj_index = 4;
 }
 
 message CreateObjReply {}
