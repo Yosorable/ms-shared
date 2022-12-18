@@ -10,6 +10,8 @@ import (
 	"syscall"
 
 	uuid "github.com/satori/go.uuid"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 // 优雅关闭
@@ -39,4 +41,8 @@ func Hash(str string) string {
 
 func GetUUID() string {
 	return uuid.NewV4().String()
+}
+
+func NewStatusError(code int, err any) error {
+	return status.Error(codes.Code(code), fmt.Sprintf("%v", err))
 }
