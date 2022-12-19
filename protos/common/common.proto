@@ -9,7 +9,6 @@ message TimeInfo {
     string updated_at = 2;
 }
 
-
 message DynamicCallRequest {
   string method = 1;
   string data = 2;
