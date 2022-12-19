@@ -8,3 +8,13 @@ message TimeInfo {
     string created_at = 1;
     string updated_at = 2;
 }
+
+
+message DynamicCallRequest {
+  string method = 1;
+  string data = 2;
+}
+
+message DynamicCallReply {
+  string data = 1;
+}
