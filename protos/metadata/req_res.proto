@@ -6,7 +6,7 @@ package metadata;
 
 message CreateObjRequest {
   string name = 1;
-  string description = 2;
+  optional string description = 2;
   repeated ObjField fields = 3;
   repeated ObjIndex obj_index = 4;
 
@@ -24,8 +24,8 @@ message CreateObjRequest {
   message ObjField {
     string name = 1;
     FieldType field_type = 2;
-    int32 lookup_obj_id = 3;
-    string description = 4;
+    optional int32 lookup_obj_id = 3;
+    optional string description = 4;
     bool is_allow_null = 5;
     
     enum FieldType {

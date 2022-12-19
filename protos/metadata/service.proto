@@ -5,7 +5,9 @@ option go_package = "github.com/Yosorable/ms-shared/protoc_gen/metadata";
 package metadata;
 
 import "protos/metadata/req_res.proto";
+import "protos/common/common.proto";
 
 service Metadata {
+  rpc DynamicCall (common.DynamicCallRequest) returns (common.DynamicCallReply) {}
   rpc CreateObj (CreateObjRequest) returns (CreateObjReply) {}
 }
