@@ -25,7 +25,7 @@ const _ = grpc.SupportPackageIsVersion7
 type MetadataClient interface {
 	DynamicCall(ctx context.Context, in *common.DynamicCallRequest, opts ...grpc.CallOption) (*common.DynamicCallReply, error)
 	CreateObj(ctx context.Context, in *CreateObjRequest, opts ...grpc.CallOption) (*CreateObjReply, error)
-	GetObjFields(ctx context.Context, in *GetObjFieldsRequest, opts ...grpc.CallOption) (*GetObjFieldsReply, error)
+	GetObj(ctx context.Context, in *GetObjRequest, opts ...grpc.CallOption) (*GetObjReply, error)
 }
 
 type metadataClient struct {
@@ -54,9 +54,9 @@ func (c *metadataClient) CreateObj(ctx context.Context, in *CreateObjRequest, op
 	return out, nil
 }
 
-func (c *metadataClient) GetObjFields(ctx context.Context, in *GetObjFieldsRequest, opts ...grpc.CallOption) (*GetObjFieldsReply, error) {
-	out := new(GetObjFieldsReply)
-	err := c.cc.Invoke(ctx, "/metadata.Metadata/GetObjFields", in, out, opts...)
+func (c *metadataClient) GetObj(ctx context.Context, in *GetObjRequest, opts ...grpc.CallOption) (*GetObjReply, error) {
+	out := new(GetObjReply)
+	err := c.cc.Invoke(ctx, "/metadata.Metadata/GetObj", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +69,7 @@ func (c *metadataClient) GetObjFields(ctx context.Context, in *GetObjFieldsReque
 type MetadataServer interface {
 	DynamicCall(context.Context, *common.DynamicCallRequest) (*common.DynamicCallReply, error)
 	CreateObj(context.Context, *CreateObjRequest) (*CreateObjReply, error)
-	GetObjFields(context.Context, *GetObjFieldsRequest) (*GetObjFieldsReply, error)
+	GetObj(context.Context, *GetObjRequest) (*GetObjReply, error)
 	mustEmbedUnimplementedMetadataServer()
 }
 
@@ -83,8 +83,8 @@ func (UnimplementedMetadataServer) DynamicCall(context.Context, *common.DynamicC
 func (UnimplementedMetadataServer) CreateObj(context.Context, *CreateObjRequest) (*CreateObjReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateObj not implemented")
 }
-func (UnimplementedMetadataServer) GetObjFields(context.Context, *GetObjFieldsRequest) (*GetObjFieldsReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetObjFields not implemented")
+func (UnimplementedMetadataServer) GetObj(context.Context, *GetObjRequest) (*GetObjReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetObj not implemented")
 }
 func (UnimplementedMetadataServer) mustEmbedUnimplementedMetadataServer() {}
 
@@ -135,20 +135,20 @@ func _Metadata_CreateObj_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Metadata_GetObjFields_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetObjFieldsRequest)
+func _Metadata_GetObj_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetObjRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MetadataServer).GetObjFields(ctx, in)
+		return srv.(MetadataServer).GetObj(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/metadata.Metadata/GetObjFields",
+		FullMethod: "/metadata.Metadata/GetObj",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MetadataServer).GetObjFields(ctx, req.(*GetObjFieldsRequest))
+		return srv.(MetadataServer).GetObj(ctx, req.(*GetObjRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -169,8 +169,8 @@ var Metadata_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Metadata_CreateObj_Handler,
 		},
 		{
-			MethodName: "GetObjFields",
-			Handler:    _Metadata_GetObjFields_Handler,
+			MethodName: "GetObj",
+			Handler:    _Metadata_GetObj_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

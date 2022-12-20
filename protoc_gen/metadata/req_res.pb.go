@@ -20,6 +20,55 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type GetObjRequest_QueryType int32
+
+const (
+	GetObjRequest_OBJ             GetObjRequest_QueryType = 0
+	GetObjRequest_FIELDS          GetObjRequest_QueryType = 1
+	GetObjRequest_OBJ_WITH_FIELDS GetObjRequest_QueryType = 2
+)
+
+// Enum value maps for GetObjRequest_QueryType.
+var (
+	GetObjRequest_QueryType_name = map[int32]string{
+		0: "OBJ",
+		1: "FIELDS",
+		2: "OBJ_WITH_FIELDS",
+	}
+	GetObjRequest_QueryType_value = map[string]int32{
+		"OBJ":             0,
+		"FIELDS":          1,
+		"OBJ_WITH_FIELDS": 2,
+	}
+)
+
+func (x GetObjRequest_QueryType) Enum() *GetObjRequest_QueryType {
+	p := new(GetObjRequest_QueryType)
+	*p = x
+	return p
+}
+
+func (x GetObjRequest_QueryType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (GetObjRequest_QueryType) Descriptor() protoreflect.EnumDescriptor {
+	return file_protos_metadata_req_res_proto_enumTypes[0].Descriptor()
+}
+
+func (GetObjRequest_QueryType) Type() protoreflect.EnumType {
+	return &file_protos_metadata_req_res_proto_enumTypes[0]
+}
+
+func (x GetObjRequest_QueryType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use GetObjRequest_QueryType.Descriptor instead.
+func (GetObjRequest_QueryType) EnumDescriptor() ([]byte, []int) {
+	return file_protos_metadata_req_res_proto_rawDescGZIP(), []int{2, 0}
+}
+
 type CreateObjRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -129,16 +178,21 @@ func (*CreateObjReply) Descriptor() ([]byte, []int) {
 	return file_protos_metadata_req_res_proto_rawDescGZIP(), []int{1}
 }
 
-type GetObjFieldsRequest struct {
+type GetObjRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Id                         *int32                  `protobuf:"varint,1,opt,name=id,proto3,oneof" json:"id,omitempty"`
+	IdList                     []int32                 `protobuf:"varint,2,rep,packed,name=id_list,json=idList,proto3" json:"id_list,omitempty"`
+	Name                       *string                 `protobuf:"bytes,3,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	NameList                   []string                `protobuf:"bytes,4,rep,name=name_list,json=nameList,proto3" json:"name_list,omitempty"`
+	QueryType                  GetObjRequest_QueryType `protobuf:"varint,5,opt,name=query_type,json=queryType,proto3,enum=metadata.GetObjRequest_QueryType" json:"query_type,omitempty"`
+	ShowTimeinfoAndDescription *bool                   `protobuf:"varint,6,opt,name=show_timeinfo_and_description,json=showTimeinfoAndDescription,proto3,oneof" json:"show_timeinfo_and_description,omitempty"`
 }
 
-func (x *GetObjFieldsRequest) Reset() {
-	*x = GetObjFieldsRequest{}
+func (x *GetObjRequest) Reset() {
+	*x = GetObjRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_protos_metadata_req_res_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -146,13 +200,13 @@ func (x *GetObjFieldsRequest) Reset() {
 	}
 }
 
-func (x *GetObjFieldsRequest) String() string {
+func (x *GetObjRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetObjFieldsRequest) ProtoMessage() {}
+func (*GetObjRequest) ProtoMessage() {}
 
-func (x *GetObjFieldsRequest) ProtoReflect() protoreflect.Message {
+func (x *GetObjRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_protos_metadata_req_res_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -164,26 +218,64 @@ func (x *GetObjFieldsRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetObjFieldsRequest.ProtoReflect.Descriptor instead.
-func (*GetObjFieldsRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetObjRequest.ProtoReflect.Descriptor instead.
+func (*GetObjRequest) Descriptor() ([]byte, []int) {
 	return file_protos_metadata_req_res_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *GetObjFieldsRequest) GetName() string {
+func (x *GetObjRequest) GetId() int32 {
+	if x != nil && x.Id != nil {
+		return *x.Id
+	}
+	return 0
+}
+
+func (x *GetObjRequest) GetIdList() []int32 {
 	if x != nil {
-		return x.Name
+		return x.IdList
+	}
+	return nil
+}
+
+func (x *GetObjRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
-type GetObjFieldsReply struct {
+func (x *GetObjRequest) GetNameList() []string {
+	if x != nil {
+		return x.NameList
+	}
+	return nil
+}
+
+func (x *GetObjRequest) GetQueryType() GetObjRequest_QueryType {
+	if x != nil {
+		return x.QueryType
+	}
+	return GetObjRequest_OBJ
+}
+
+func (x *GetObjRequest) GetShowTimeinfoAndDescription() bool {
+	if x != nil && x.ShowTimeinfoAndDescription != nil {
+		return *x.ShowTimeinfoAndDescription
+	}
+	return false
+}
+
+type GetObjReply struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
+
+	ObjWithFields     *ObjDaoWithFieldsDao   `protobuf:"bytes,1,opt,name=obj_with_fields,json=objWithFields,proto3" json:"obj_with_fields,omitempty"`
+	ObjWithFieldsList []*ObjDaoWithFieldsDao `protobuf:"bytes,2,rep,name=obj_with_fields_list,json=objWithFieldsList,proto3" json:"obj_with_fields_list,omitempty"`
 }
 
-func (x *GetObjFieldsReply) Reset() {
-	*x = GetObjFieldsReply{}
+func (x *GetObjReply) Reset() {
+	*x = GetObjReply{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_protos_metadata_req_res_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -191,13 +283,13 @@ func (x *GetObjFieldsReply) Reset() {
 	}
 }
 
-func (x *GetObjFieldsReply) String() string {
+func (x *GetObjReply) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetObjFieldsReply) ProtoMessage() {}
+func (*GetObjReply) ProtoMessage() {}
 
-func (x *GetObjFieldsReply) ProtoReflect() protoreflect.Message {
+func (x *GetObjReply) ProtoReflect() protoreflect.Message {
 	mi := &file_protos_metadata_req_res_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -209,9 +301,23 @@ func (x *GetObjFieldsReply) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetObjFieldsReply.ProtoReflect.Descriptor instead.
-func (*GetObjFieldsReply) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetObjReply.ProtoReflect.Descriptor instead.
+func (*GetObjReply) Descriptor() ([]byte, []int) {
 	return file_protos_metadata_req_res_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *GetObjReply) GetObjWithFields() *ObjDaoWithFieldsDao {
+	if x != nil {
+		return x.ObjWithFields
+	}
+	return nil
+}
+
+func (x *GetObjReply) GetObjWithFieldsList() []*ObjDaoWithFieldsDao {
+	if x != nil {
+		return x.ObjWithFieldsList
+	}
+	return nil
 }
 
 var File_protos_metadata_req_res_proto protoreflect.FileDescriptor
@@ -234,11 +340,40 @@ var file_protos_metadata_req_res_proto_rawDesc = []byte{
 	0x2e, 0x4f, 0x62, 0x6a, 0x49, 0x6e, 0x64, 0x65, 0x78, 0x52, 0x08, 0x6f, 0x62, 0x6a, 0x49, 0x6e,
 	0x64, 0x65, 0x78, 0x42, 0x0e, 0x0a, 0x0c, 0x5f, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74,
 	0x69, 0x6f, 0x6e, 0x22, 0x10, 0x0a, 0x0e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4f, 0x62, 0x6a,
-	0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x29, 0x0a, 0x13, 0x47, 0x65, 0x74, 0x4f, 0x62, 0x6a, 0x46,
-	0x69, 0x65, 0x6c, 0x64, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04,
-	0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65,
-	0x22, 0x13, 0x0a, 0x11, 0x47, 0x65, 0x74, 0x4f, 0x62, 0x6a, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x73,
-	0x52, 0x65, 0x70, 0x6c, 0x79, 0x42, 0x34, 0x5a, 0x32, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e,
+	0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0xe6, 0x02, 0x0a, 0x0d, 0x47, 0x65, 0x74, 0x4f, 0x62, 0x6a,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x13, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x05, 0x48, 0x00, 0x52, 0x02, 0x69, 0x64, 0x88, 0x01, 0x01, 0x12, 0x17, 0x0a, 0x07,
+	0x69, 0x64, 0x5f, 0x6c, 0x69, 0x73, 0x74, 0x18, 0x02, 0x20, 0x03, 0x28, 0x05, 0x52, 0x06, 0x69,
+	0x64, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x09, 0x48, 0x01, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x88, 0x01, 0x01, 0x12, 0x1b,
+	0x0a, 0x09, 0x6e, 0x61, 0x6d, 0x65, 0x5f, 0x6c, 0x69, 0x73, 0x74, 0x18, 0x04, 0x20, 0x03, 0x28,
+	0x09, 0x52, 0x08, 0x6e, 0x61, 0x6d, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x40, 0x0a, 0x0a, 0x71,
+	0x75, 0x65, 0x72, 0x79, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0e, 0x32,
+	0x21, 0x2e, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x2e, 0x47, 0x65, 0x74, 0x4f, 0x62,
+	0x6a, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x54, 0x79,
+	0x70, 0x65, 0x52, 0x09, 0x71, 0x75, 0x65, 0x72, 0x79, 0x54, 0x79, 0x70, 0x65, 0x12, 0x46, 0x0a,
+	0x1d, 0x73, 0x68, 0x6f, 0x77, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x69, 0x6e, 0x66, 0x6f, 0x5f, 0x61,
+	0x6e, 0x64, 0x5f, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x06,
+	0x20, 0x01, 0x28, 0x08, 0x48, 0x02, 0x52, 0x1a, 0x73, 0x68, 0x6f, 0x77, 0x54, 0x69, 0x6d, 0x65,
+	0x69, 0x6e, 0x66, 0x6f, 0x41, 0x6e, 0x64, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69,
+	0x6f, 0x6e, 0x88, 0x01, 0x01, 0x22, 0x35, 0x0a, 0x09, 0x51, 0x75, 0x65, 0x72, 0x79, 0x54, 0x79,
+	0x70, 0x65, 0x12, 0x07, 0x0a, 0x03, 0x4f, 0x42, 0x4a, 0x10, 0x00, 0x12, 0x0a, 0x0a, 0x06, 0x46,
+	0x49, 0x45, 0x4c, 0x44, 0x53, 0x10, 0x01, 0x12, 0x13, 0x0a, 0x0f, 0x4f, 0x42, 0x4a, 0x5f, 0x57,
+	0x49, 0x54, 0x48, 0x5f, 0x46, 0x49, 0x45, 0x4c, 0x44, 0x53, 0x10, 0x02, 0x42, 0x05, 0x0a, 0x03,
+	0x5f, 0x69, 0x64, 0x42, 0x07, 0x0a, 0x05, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x42, 0x20, 0x0a, 0x1e,
+	0x5f, 0x73, 0x68, 0x6f, 0x77, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x69, 0x6e, 0x66, 0x6f, 0x5f, 0x61,
+	0x6e, 0x64, 0x5f, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0xa4,
+	0x01, 0x0a, 0x0b, 0x47, 0x65, 0x74, 0x4f, 0x62, 0x6a, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x12, 0x45,
+	0x0a, 0x0f, 0x6f, 0x62, 0x6a, 0x5f, 0x77, 0x69, 0x74, 0x68, 0x5f, 0x66, 0x69, 0x65, 0x6c, 0x64,
+	0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61,
+	0x74, 0x61, 0x2e, 0x4f, 0x62, 0x6a, 0x44, 0x61, 0x6f, 0x57, 0x69, 0x74, 0x68, 0x46, 0x69, 0x65,
+	0x6c, 0x64, 0x73, 0x44, 0x61, 0x6f, 0x52, 0x0d, 0x6f, 0x62, 0x6a, 0x57, 0x69, 0x74, 0x68, 0x46,
+	0x69, 0x65, 0x6c, 0x64, 0x73, 0x12, 0x4e, 0x0a, 0x14, 0x6f, 0x62, 0x6a, 0x5f, 0x77, 0x69, 0x74,
+	0x68, 0x5f, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x73, 0x5f, 0x6c, 0x69, 0x73, 0x74, 0x18, 0x02, 0x20,
+	0x03, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x2e, 0x4f,
+	0x62, 0x6a, 0x44, 0x61, 0x6f, 0x57, 0x69, 0x74, 0x68, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x73, 0x44,
+	0x61, 0x6f, 0x52, 0x11, 0x6f, 0x62, 0x6a, 0x57, 0x69, 0x74, 0x68, 0x46, 0x69, 0x65, 0x6c, 0x64,
+	0x73, 0x4c, 0x69, 0x73, 0x74, 0x42, 0x34, 0x5a, 0x32, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e,
 	0x63, 0x6f, 0x6d, 0x2f, 0x59, 0x6f, 0x73, 0x6f, 0x72, 0x61, 0x62, 0x6c, 0x65, 0x2f, 0x6d, 0x73,
 	0x2d, 0x73, 0x68, 0x61, 0x72, 0x65, 0x64, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x5f, 0x67,
 	0x65, 0x6e, 0x2f, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f,
@@ -257,23 +392,29 @@ func file_protos_metadata_req_res_proto_rawDescGZIP() []byte {
 	return file_protos_metadata_req_res_proto_rawDescData
 }
 
+var file_protos_metadata_req_res_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_protos_metadata_req_res_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_protos_metadata_req_res_proto_goTypes = []interface{}{
-	(*CreateObjRequest)(nil),    // 0: metadata.CreateObjRequest
-	(*CreateObjReply)(nil),      // 1: metadata.CreateObjReply
-	(*GetObjFieldsRequest)(nil), // 2: metadata.GetObjFieldsRequest
-	(*GetObjFieldsReply)(nil),   // 3: metadata.GetObjFieldsReply
-	(*ObjField)(nil),            // 4: metadata.ObjField
-	(*ObjIndex)(nil),            // 5: metadata.ObjIndex
+	(GetObjRequest_QueryType)(0), // 0: metadata.GetObjRequest.QueryType
+	(*CreateObjRequest)(nil),     // 1: metadata.CreateObjRequest
+	(*CreateObjReply)(nil),       // 2: metadata.CreateObjReply
+	(*GetObjRequest)(nil),        // 3: metadata.GetObjRequest
+	(*GetObjReply)(nil),          // 4: metadata.GetObjReply
+	(*ObjField)(nil),             // 5: metadata.ObjField
+	(*ObjIndex)(nil),             // 6: metadata.ObjIndex
+	(*ObjDaoWithFieldsDao)(nil),  // 7: metadata.ObjDaoWithFieldsDao
 }
 var file_protos_metadata_req_res_proto_depIdxs = []int32{
-	4, // 0: metadata.CreateObjRequest.fields:type_name -> metadata.ObjField
-	5, // 1: metadata.CreateObjRequest.obj_index:type_name -> metadata.ObjIndex
-	2, // [2:2] is the sub-list for method output_type
-	2, // [2:2] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	5, // 0: metadata.CreateObjRequest.fields:type_name -> metadata.ObjField
+	6, // 1: metadata.CreateObjRequest.obj_index:type_name -> metadata.ObjIndex
+	0, // 2: metadata.GetObjRequest.query_type:type_name -> metadata.GetObjRequest.QueryType
+	7, // 3: metadata.GetObjReply.obj_with_fields:type_name -> metadata.ObjDaoWithFieldsDao
+	7, // 4: metadata.GetObjReply.obj_with_fields_list:type_name -> metadata.ObjDaoWithFieldsDao
+	5, // [5:5] is the sub-list for method output_type
+	5, // [5:5] is the sub-list for method input_type
+	5, // [5:5] is the sub-list for extension type_name
+	5, // [5:5] is the sub-list for extension extendee
+	0, // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_protos_metadata_req_res_proto_init() }
@@ -308,7 +449,7 @@ func file_protos_metadata_req_res_proto_init() {
 			}
 		}
 		file_protos_metadata_req_res_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetObjFieldsRequest); i {
+			switch v := v.(*GetObjRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -320,7 +461,7 @@ func file_protos_metadata_req_res_proto_init() {
 			}
 		}
 		file_protos_metadata_req_res_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetObjFieldsReply); i {
+			switch v := v.(*GetObjReply); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -333,18 +474,20 @@ func file_protos_metadata_req_res_proto_init() {
 		}
 	}
 	file_protos_metadata_req_res_proto_msgTypes[0].OneofWrappers = []interface{}{}
+	file_protos_metadata_req_res_proto_msgTypes[2].OneofWrappers = []interface{}{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_protos_metadata_req_res_proto_rawDesc,
-			NumEnums:      0,
+			NumEnums:      1,
 			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_protos_metadata_req_res_proto_goTypes,
 		DependencyIndexes: file_protos_metadata_req_res_proto_depIdxs,
+		EnumInfos:         file_protos_metadata_req_res_proto_enumTypes,
 		MessageInfos:      file_protos_metadata_req_res_proto_msgTypes,
 	}.Build()
 	File_protos_metadata_req_res_proto = out.File

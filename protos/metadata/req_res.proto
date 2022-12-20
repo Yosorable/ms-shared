@@ -15,8 +15,24 @@ message CreateObjRequest {
 
 message CreateObjReply {}
 
-message GetObjFieldsRequest {
-  string name = 1;
+message GetObjRequest {
+  optional int32 id = 1;
+  repeated int32 id_list = 2;
+
+  optional string name = 3;
+  repeated string name_list = 4;
+
+  QueryType query_type = 5;
+  optional bool show_timeinfo_and_description = 6;
+
+  enum QueryType {
+    OBJ = 0;
+    FIELDS = 1;
+    OBJ_WITH_FIELDS = 2;
+  }
 }
 
-message GetObjFieldsReply {}
+message GetObjReply {
+  ObjDaoWithFieldsDao obj_with_fields = 1;
+  repeated ObjDaoWithFieldsDao obj_with_fields_list = 2;
+}
