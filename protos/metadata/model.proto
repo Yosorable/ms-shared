@@ -46,7 +46,7 @@ message ObjDao {
 message ObjFieldDao {
   int32 id = 1;
   int32 obj_id = 2;
-  int32 name = 3;
+  string name = 3;
   ObjField.FieldType field_type = 4;
   optional int32 lookup_obj_id = 5;
   optional string description = 6;
