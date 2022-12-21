@@ -10,4 +10,7 @@ import "protos/common/common.proto";
 service Metadata {
   rpc DynamicCall (common.DynamicCallRequest) returns (common.DynamicCallReply) {}
   rpc CreateObj (CreateObjRequest) returns (CreateObjReply) {}
+
+  rpc GetObjByID (GetObjRequest) returns (GetObjByIDReply) {}
+  rpc GetObjByName (GetObjRequest) returns (GetObjByNameReply) {}
 }
