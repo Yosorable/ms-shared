@@ -16,14 +16,12 @@ message CreateObjRequest {
 message CreateObjReply {}
 
 message GetObjRequest {
-  optional int32 id = 1;
-  repeated int32 id_list = 2;
-
-  optional string name = 3;
-  repeated string name_list = 4;
+  repeated int32 id_list = 1;
+  repeated string name_list = 2;
 
   QueryType query_type = 5;
-  optional bool show_timeinfo_and_description = 6;
+  optional bool show_timeinfo = 6;
+  optional bool show_description = 7;
 
   enum QueryType {
     OBJ = 0;
@@ -32,7 +30,12 @@ message GetObjRequest {
   }
 }
 
-message GetObjReply {
-  ObjDaoWithFieldsDao obj_with_fields = 1;
-  repeated ObjDaoWithFieldsDao obj_with_fields_list = 2;
+message GetObjByIDReply {
+  map<int32, ObjDao> objs = 1;
+  map<int32, ObjFieldDaoList> fields = 2;
+}
+
+message GetObjByNameReply {
+  map<string, ObjDao> objs = 1;
+  map<string, ObjFieldDaoList> fields = 2;
 }

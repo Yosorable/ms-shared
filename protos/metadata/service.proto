@@ -11,5 +11,6 @@ service Metadata {
   rpc DynamicCall (common.DynamicCallRequest) returns (common.DynamicCallReply) {}
   rpc CreateObj (CreateObjRequest) returns (CreateObjReply) {}
 
-  rpc GetObj (GetObjRequest) returns (GetObjReply) {}
+  rpc GetObjByID (GetObjRequest) returns (GetObjByIDReply) {}
+  rpc GetObjByName (GetObjRequest) returns (GetObjByNameReply) {}
 }

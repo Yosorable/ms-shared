@@ -54,7 +54,6 @@ message ObjFieldDao {
   common.TimeInfo time_info = 8;
 }
 
-message ObjDaoWithFieldsDao {
-  ObjDao obj = 1;
-  repeated ObjFieldDao fields = 2;
+message ObjFieldDaoList {
+  repeated ObjFieldDao objfields = 1;
 }

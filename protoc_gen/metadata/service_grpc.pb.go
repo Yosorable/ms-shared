@@ -25,7 +25,8 @@ const _ = grpc.SupportPackageIsVersion7
 type MetadataClient interface {
 	DynamicCall(ctx context.Context, in *common.DynamicCallRequest, opts ...grpc.CallOption) (*common.DynamicCallReply, error)
 	CreateObj(ctx context.Context, in *CreateObjRequest, opts ...grpc.CallOption) (*CreateObjReply, error)
-	GetObj(ctx context.Context, in *GetObjRequest, opts ...grpc.CallOption) (*GetObjReply, error)
+	GetObjByID(ctx context.Context, in *GetObjRequest, opts ...grpc.CallOption) (*GetObjByIDReply, error)
+	GetObjByName(ctx context.Context, in *GetObjRequest, opts ...grpc.CallOption) (*GetObjByNameReply, error)
 }
 
 type metadataClient struct {
@@ -54,9 +55,18 @@ func (c *metadataClient) CreateObj(ctx context.Context, in *CreateObjRequest, op
 	return out, nil
 }
 
-func (c *metadataClient) GetObj(ctx context.Context, in *GetObjRequest, opts ...grpc.CallOption) (*GetObjReply, error) {
-	out := new(GetObjReply)
-	err := c.cc.Invoke(ctx, "/metadata.Metadata/GetObj", in, out, opts...)
+func (c *metadataClient) GetObjByID(ctx context.Context, in *GetObjRequest, opts ...grpc.CallOption) (*GetObjByIDReply, error) {
+	out := new(GetObjByIDReply)
+	err := c.cc.Invoke(ctx, "/metadata.Metadata/GetObjByID", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *metadataClient) GetObjByName(ctx context.Context, in *GetObjRequest, opts ...grpc.CallOption) (*GetObjByNameReply, error) {
+	out := new(GetObjByNameReply)
+	err := c.cc.Invoke(ctx, "/metadata.Metadata/GetObjByName", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +79,8 @@ func (c *metadataClient) GetObj(ctx context.Context, in *GetObjRequest, opts ...
 type MetadataServer interface {
 	DynamicCall(context.Context, *common.DynamicCallRequest) (*common.DynamicCallReply, error)
 	CreateObj(context.Context, *CreateObjRequest) (*CreateObjReply, error)
-	GetObj(context.Context, *GetObjRequest) (*GetObjReply, error)
+	GetObjByID(context.Context, *GetObjRequest) (*GetObjByIDReply, error)
+	GetObjByName(context.Context, *GetObjRequest) (*GetObjByNameReply, error)
 	mustEmbedUnimplementedMetadataServer()
 }
 
@@ -83,8 +94,11 @@ func (UnimplementedMetadataServer) DynamicCall(context.Context, *common.DynamicC
 func (UnimplementedMetadataServer) CreateObj(context.Context, *CreateObjRequest) (*CreateObjReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateObj not implemented")
 }
-func (UnimplementedMetadataServer) GetObj(context.Context, *GetObjRequest) (*GetObjReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetObj not implemented")
+func (UnimplementedMetadataServer) GetObjByID(context.Context, *GetObjRequest) (*GetObjByIDReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetObjByID not implemented")
+}
+func (UnimplementedMetadataServer) GetObjByName(context.Context, *GetObjRequest) (*GetObjByNameReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetObjByName not implemented")
 }
 func (UnimplementedMetadataServer) mustEmbedUnimplementedMetadataServer() {}
 
@@ -135,20 +149,38 @@ func _Metadata_CreateObj_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Metadata_GetObj_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Metadata_GetObjByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetObjRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MetadataServer).GetObj(ctx, in)
+		return srv.(MetadataServer).GetObjByID(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/metadata.Metadata/GetObj",
+		FullMethod: "/metadata.Metadata/GetObjByID",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MetadataServer).GetObj(ctx, req.(*GetObjRequest))
+		return srv.(MetadataServer).GetObjByID(ctx, req.(*GetObjRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Metadata_GetObjByName_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetObjRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MetadataServer).GetObjByName(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/metadata.Metadata/GetObjByName",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MetadataServer).GetObjByName(ctx, req.(*GetObjRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -169,8 +201,12 @@ var Metadata_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Metadata_CreateObj_Handler,
 		},
 		{
-			MethodName: "GetObj",
-			Handler:    _Metadata_GetObj_Handler,
+			MethodName: "GetObjByID",
+			Handler:    _Metadata_GetObjByID_Handler,
+		},
+		{
+			MethodName: "GetObjByName",
+			Handler:    _Metadata_GetObjByName_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
