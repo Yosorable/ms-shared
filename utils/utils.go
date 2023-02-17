@@ -12,6 +12,7 @@ import (
 	uuid "github.com/satori/go.uuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"gopkg.in/yaml.v3"
 )
 
 // 优雅关闭
@@ -30,6 +31,14 @@ func LoadJsonConfigFileWithDefaultPath(v any) error {
 		return err
 	}
 	return json.Unmarshal(bts, v)
+}
+
+func LoadYamlConfigFileWithDefaultPath(v any) error {
+	bts, err := os.ReadFile("./config.yaml")
+	if err != nil {
+		return err
+	}
+	return yaml.Unmarshal(bts, v)
 }
 
 // MD5加密
