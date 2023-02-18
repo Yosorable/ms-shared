@@ -12,5 +12,6 @@ message FaasTask {
   optional string http_trigger_path = 3;
   optional string cron_trigger_exp = 4;
   string function_code = 5;
-  common.TimeInfo time_info = 6;
+  bool enable = 6;
+  common.TimeInfo time_info = 7;
 }

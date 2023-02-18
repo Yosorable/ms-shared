@@ -11,6 +11,7 @@ message CreateFaasTaskRequest {
   optional string http_trigger_path = 2;
   optional string cron_trigger_exp = 3;
   string function_code = 4;
+  optional bool enable = 5;
 }
 
 message CreateFaasTaskReply {}
@@ -49,6 +50,7 @@ message UpdateFaasTaskByIDRequest {
   optional string http_trigger_path = 3;
   optional string cron_trigger_exp = 4;
   optional string function_code = 5;
+  optional bool enable = 6;
 }
 
 message UpdateFaasTaskByIDReply {}
