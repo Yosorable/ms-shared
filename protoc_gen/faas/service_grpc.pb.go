@@ -27,6 +27,7 @@ type FaasClient interface {
 	CreateFaasTask(ctx context.Context, in *CreateFaasTaskRequest, opts ...grpc.CallOption) (*CreateFaasTaskReply, error)
 	GetFaasTaskByPage(ctx context.Context, in *GetFaasTaskByPageRequest, opts ...grpc.CallOption) (*GetFaasTaskByPageReply, error)
 	GetFaasTaskByID(ctx context.Context, in *GetFaasTaskByIDRequest, opts ...grpc.CallOption) (*GetFaasTaskByIDReply, error)
+	UpdateFaasTaskByID(ctx context.Context, in *UpdateFaasTaskByIDRequest, opts ...grpc.CallOption) (*UpdateFaasTaskByIDReply, error)
 	RunTask(ctx context.Context, in *RunTaskRequest, opts ...grpc.CallOption) (*RunTaskReply, error)
 }
 
@@ -74,6 +75,15 @@ func (c *faasClient) GetFaasTaskByID(ctx context.Context, in *GetFaasTaskByIDReq
 	return out, nil
 }
 
+func (c *faasClient) UpdateFaasTaskByID(ctx context.Context, in *UpdateFaasTaskByIDRequest, opts ...grpc.CallOption) (*UpdateFaasTaskByIDReply, error) {
+	out := new(UpdateFaasTaskByIDReply)
+	err := c.cc.Invoke(ctx, "/faas.Faas/UpdateFaasTaskByID", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *faasClient) RunTask(ctx context.Context, in *RunTaskRequest, opts ...grpc.CallOption) (*RunTaskReply, error) {
 	out := new(RunTaskReply)
 	err := c.cc.Invoke(ctx, "/faas.Faas/RunTask", in, out, opts...)
@@ -91,6 +101,7 @@ type FaasServer interface {
 	CreateFaasTask(context.Context, *CreateFaasTaskRequest) (*CreateFaasTaskReply, error)
 	GetFaasTaskByPage(context.Context, *GetFaasTaskByPageRequest) (*GetFaasTaskByPageReply, error)
 	GetFaasTaskByID(context.Context, *GetFaasTaskByIDRequest) (*GetFaasTaskByIDReply, error)
+	UpdateFaasTaskByID(context.Context, *UpdateFaasTaskByIDRequest) (*UpdateFaasTaskByIDReply, error)
 	RunTask(context.Context, *RunTaskRequest) (*RunTaskReply, error)
 	mustEmbedUnimplementedFaasServer()
 }
@@ -110,6 +121,9 @@ func (UnimplementedFaasServer) GetFaasTaskByPage(context.Context, *GetFaasTaskBy
 }
 func (UnimplementedFaasServer) GetFaasTaskByID(context.Context, *GetFaasTaskByIDRequest) (*GetFaasTaskByIDReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFaasTaskByID not implemented")
+}
+func (UnimplementedFaasServer) UpdateFaasTaskByID(context.Context, *UpdateFaasTaskByIDRequest) (*UpdateFaasTaskByIDReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateFaasTaskByID not implemented")
 }
 func (UnimplementedFaasServer) RunTask(context.Context, *RunTaskRequest) (*RunTaskReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RunTask not implemented")
@@ -199,6 +213,24 @@ func _Faas_GetFaasTaskByID_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Faas_UpdateFaasTaskByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateFaasTaskByIDRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FaasServer).UpdateFaasTaskByID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/faas.Faas/UpdateFaasTaskByID",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FaasServer).UpdateFaasTaskByID(ctx, req.(*UpdateFaasTaskByIDRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Faas_RunTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RunTaskRequest)
 	if err := dec(in); err != nil {
@@ -239,6 +271,10 @@ var Faas_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetFaasTaskByID",
 			Handler:    _Faas_GetFaasTaskByID_Handler,
+		},
+		{
+			MethodName: "UpdateFaasTaskByID",
+			Handler:    _Faas_UpdateFaasTaskByID_Handler,
 		},
 		{
 			MethodName: "RunTask",

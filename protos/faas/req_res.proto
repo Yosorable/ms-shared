@@ -41,3 +41,13 @@ message GetFaasTaskByIDRequest {
 message GetFaasTaskByIDReply {
   FaasTask faas_task = 1;
 }
+
+message UpdateFaasTaskByIDRequest {
+  int32 id = 1;
+  optional string name = 2;
+  optional string http_trigger_path = 3;
+  optional string cron_trigger_exp = 4;
+  optional string function_code = 5;
+}
+
+message UpdateFaasTaskByIDReply {}
