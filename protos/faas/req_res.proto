@@ -54,3 +54,12 @@ message UpdateFaasTaskByIDRequest {
 }
 
 message UpdateFaasTaskByIDReply {}
+
+message HttpCallTaskRequest {
+  string Path = 1;
+  optional string params = 2;
+}
+
+message HttpCallTaskReply {
+  optional string result = 1;
+}
