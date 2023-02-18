@@ -16,7 +16,8 @@ message CreateFaasTaskRequest {
 message CreateFaasTaskReply {}
 
 message RunTaskRequest {
-  optional string params = 1;
+  int32 id = 1;
+  optional string params = 2;
 }
 
 message RunTaskReply {
