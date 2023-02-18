@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+option go_package = "github.com/Yosorable/ms-shared/protoc_gen/faas";
+
+package faas;
+
+import "protos/faas/model.proto";
+
+message CreateFaasTaskRequest {
+  string name = 1;
+  optional string http_trigger_path = 2;
+  optional string cron_trigger_exp = 3;
+  string function_code = 4;
+}
+
+message CreateFaasTaskReply {}
+
+message RunTaskRequest {
+  optional string params = 1;
+}
+
+message RunTaskReply {
+  optional string result = 1;
+}
+
+message GetFaasTaskByPageRequest {
+  int32 page = 1;
+  int32 page_size = 2;
+  optional string name = 3;
+}
+
+message GetFaasTaskByPageReply {
+  repeated FaasTask faas_tasks = 1;
+  int32 total = 2;
+}
+
+message GetFaasTaskByIDRequest {
+  int32 id = 1;
+}
+
+message GetFaasTaskByIDReply {
+  FaasTask faas_task = 1;
+}

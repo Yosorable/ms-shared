@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option go_package = "github.com/Yosorable/ms-shared/protoc_gen/faas";
+
+package faas;
+
+import "protos/common/common.proto";
+
+message FaasTask {
+  int32 id = 1;
+  string name = 2;
+  optional string http_trigger_path = 3;
+  optional string cron_trigger_exp = 4;
+  string function_code = 5;
+  common.TimeInfo time_info = 6;
+}

@@ -1,1 +1,1 @@
-protoc --go_out=. --go_opt=module=github.com/Yosorable/ms-shared --go-grpc_out=. --go-grpc_opt=module=github.com/Yosorable/ms-shared ./protos/admin/*.proto ./protos/common/*.proto ./protos/metadata/*.proto
+protoc --go_out=. --go_opt=module=github.com/Yosorable/ms-shared --go-grpc_out=. --go-grpc_opt=module=github.com/Yosorable/ms-shared ./protos/admin/*.proto ./protos/common/*.proto ./protos/metadata/*.proto ./protos/faas/*.proto

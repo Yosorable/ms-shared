@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option go_package = "github.com/Yosorable/ms-shared/protoc_gen/faas";
+
+package faas;
+
+import "protos/common/common.proto";
+import "protos/faas/req_res.proto";
+
+service Faas {
+  rpc DynamicCall (common.DynamicCallRequest) returns (common.DynamicCallReply) {}
+  rpc CreateFaasTask (CreateFaasTaskRequest) returns (CreateFaasTaskReply) {}
+  rpc GetFaasTaskByPage (GetFaasTaskByPageRequest) returns (GetFaasTaskByPageReply) {}
+  rpc GetFaasTaskByID (GetFaasTaskByIDRequest) returns (GetFaasTaskByIDReply) {}
+  rpc RunTask (RunTaskRequest) returns (RunTaskReply) {}
+}
