@@ -780,6 +780,91 @@ func (x *TestRunCodeReply) GetResult() string {
 	return ""
 }
 
+type DeleteTaskRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id int32 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (x *DeleteTaskRequest) Reset() {
+	*x = DeleteTaskRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_protos_faas_req_res_proto_msgTypes[14]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteTaskRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteTaskRequest) ProtoMessage() {}
+
+func (x *DeleteTaskRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_protos_faas_req_res_proto_msgTypes[14]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteTaskRequest.ProtoReflect.Descriptor instead.
+func (*DeleteTaskRequest) Descriptor() ([]byte, []int) {
+	return file_protos_faas_req_res_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *DeleteTaskRequest) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+type DeleteTaskReply struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *DeleteTaskReply) Reset() {
+	*x = DeleteTaskReply{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_protos_faas_req_res_proto_msgTypes[15]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteTaskReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteTaskReply) ProtoMessage() {}
+
+func (x *DeleteTaskReply) ProtoReflect() protoreflect.Message {
+	mi := &file_protos_faas_req_res_proto_msgTypes[15]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteTaskReply.ProtoReflect.Descriptor instead.
+func (*DeleteTaskReply) Descriptor() ([]byte, []int) {
+	return file_protos_faas_req_res_proto_rawDescGZIP(), []int{15}
+}
+
 var File_protos_faas_req_res_proto protoreflect.FileDescriptor
 
 var file_protos_faas_req_res_proto_rawDesc = []byte{
@@ -872,11 +957,15 @@ var file_protos_faas_req_res_proto_rawDesc = []byte{
 	0x61, 0x6d, 0x73, 0x22, 0x3a, 0x0a, 0x10, 0x54, 0x65, 0x73, 0x74, 0x52, 0x75, 0x6e, 0x43, 0x6f,
 	0x64, 0x65, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x12, 0x1b, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c,
 	0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x48, 0x00, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c,
-	0x74, 0x88, 0x01, 0x01, 0x42, 0x09, 0x0a, 0x07, 0x5f, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x42,
-	0x30, 0x5a, 0x2e, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x59, 0x6f,
-	0x73, 0x6f, 0x72, 0x61, 0x62, 0x6c, 0x65, 0x2f, 0x6d, 0x73, 0x2d, 0x73, 0x68, 0x61, 0x72, 0x65,
-	0x64, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x5f, 0x67, 0x65, 0x6e, 0x2f, 0x66, 0x61, 0x61,
-	0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x74, 0x88, 0x01, 0x01, 0x42, 0x09, 0x0a, 0x07, 0x5f, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22,
+	0x23, 0x0a, 0x11, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05,
+	0x52, 0x02, 0x69, 0x64, 0x22, 0x11, 0x0a, 0x0f, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x54, 0x61,
+	0x73, 0x6b, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x42, 0x30, 0x5a, 0x2e, 0x67, 0x69, 0x74, 0x68, 0x75,
+	0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x59, 0x6f, 0x73, 0x6f, 0x72, 0x61, 0x62, 0x6c, 0x65, 0x2f,
+	0x6d, 0x73, 0x2d, 0x73, 0x68, 0x61, 0x72, 0x65, 0x64, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63,
+	0x5f, 0x67, 0x65, 0x6e, 0x2f, 0x66, 0x61, 0x61, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x33,
 }
 
 var (
@@ -891,7 +980,7 @@ func file_protos_faas_req_res_proto_rawDescGZIP() []byte {
 	return file_protos_faas_req_res_proto_rawDescData
 }
 
-var file_protos_faas_req_res_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
+var file_protos_faas_req_res_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_protos_faas_req_res_proto_goTypes = []interface{}{
 	(*CreateFaasTaskRequest)(nil),     // 0: faas.CreateFaasTaskRequest
 	(*CreateFaasTaskReply)(nil),       // 1: faas.CreateFaasTaskReply
@@ -907,11 +996,13 @@ var file_protos_faas_req_res_proto_goTypes = []interface{}{
 	(*HttpCallTaskReply)(nil),         // 11: faas.HttpCallTaskReply
 	(*TestRunCodeRequest)(nil),        // 12: faas.TestRunCodeRequest
 	(*TestRunCodeReply)(nil),          // 13: faas.TestRunCodeReply
-	(*FaasTask)(nil),                  // 14: faas.FaasTask
+	(*DeleteTaskRequest)(nil),         // 14: faas.DeleteTaskRequest
+	(*DeleteTaskReply)(nil),           // 15: faas.DeleteTaskReply
+	(*FaasTask)(nil),                  // 16: faas.FaasTask
 }
 var file_protos_faas_req_res_proto_depIdxs = []int32{
-	14, // 0: faas.GetFaasTaskByPageReply.faas_tasks:type_name -> faas.FaasTask
-	14, // 1: faas.GetFaasTaskByIDReply.faas_task:type_name -> faas.FaasTask
+	16, // 0: faas.GetFaasTaskByPageReply.faas_tasks:type_name -> faas.FaasTask
+	16, // 1: faas.GetFaasTaskByIDReply.faas_task:type_name -> faas.FaasTask
 	2,  // [2:2] is the sub-list for method output_type
 	2,  // [2:2] is the sub-list for method input_type
 	2,  // [2:2] is the sub-list for extension type_name
@@ -1094,6 +1185,30 @@ func file_protos_faas_req_res_proto_init() {
 				return nil
 			}
 		}
+		file_protos_faas_req_res_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeleteTaskRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_protos_faas_req_res_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeleteTaskReply); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	file_protos_faas_req_res_proto_msgTypes[0].OneofWrappers = []interface{}{}
 	file_protos_faas_req_res_proto_msgTypes[2].OneofWrappers = []interface{}{}
@@ -1110,7 +1225,7 @@ func file_protos_faas_req_res_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_protos_faas_req_res_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   14,
+			NumMessages:   16,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
