@@ -30,6 +30,7 @@ type FaasClient interface {
 	UpdateFaasTaskByID(ctx context.Context, in *UpdateFaasTaskByIDRequest, opts ...grpc.CallOption) (*UpdateFaasTaskByIDReply, error)
 	RunTask(ctx context.Context, in *RunTaskRequest, opts ...grpc.CallOption) (*RunTaskReply, error)
 	HttpCallTask(ctx context.Context, in *HttpCallTaskRequest, opts ...grpc.CallOption) (*HttpCallTaskReply, error)
+	TestRunCode(ctx context.Context, in *TestRunCodeRequest, opts ...grpc.CallOption) (*TestRunCodeReply, error)
 }
 
 type faasClient struct {
@@ -103,6 +104,15 @@ func (c *faasClient) HttpCallTask(ctx context.Context, in *HttpCallTaskRequest, 
 	return out, nil
 }
 
+func (c *faasClient) TestRunCode(ctx context.Context, in *TestRunCodeRequest, opts ...grpc.CallOption) (*TestRunCodeReply, error) {
+	out := new(TestRunCodeReply)
+	err := c.cc.Invoke(ctx, "/faas.Faas/TestRunCode", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // FaasServer is the server API for Faas service.
 // All implementations must embed UnimplementedFaasServer
 // for forward compatibility
@@ -114,6 +124,7 @@ type FaasServer interface {
 	UpdateFaasTaskByID(context.Context, *UpdateFaasTaskByIDRequest) (*UpdateFaasTaskByIDReply, error)
 	RunTask(context.Context, *RunTaskRequest) (*RunTaskReply, error)
 	HttpCallTask(context.Context, *HttpCallTaskRequest) (*HttpCallTaskReply, error)
+	TestRunCode(context.Context, *TestRunCodeRequest) (*TestRunCodeReply, error)
 	mustEmbedUnimplementedFaasServer()
 }
 
@@ -141,6 +152,9 @@ func (UnimplementedFaasServer) RunTask(context.Context, *RunTaskRequest) (*RunTa
 }
 func (UnimplementedFaasServer) HttpCallTask(context.Context, *HttpCallTaskRequest) (*HttpCallTaskReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HttpCallTask not implemented")
+}
+func (UnimplementedFaasServer) TestRunCode(context.Context, *TestRunCodeRequest) (*TestRunCodeReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TestRunCode not implemented")
 }
 func (UnimplementedFaasServer) mustEmbedUnimplementedFaasServer() {}
 
@@ -281,6 +295,24 @@ func _Faas_HttpCallTask_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Faas_TestRunCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TestRunCodeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FaasServer).TestRunCode(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/faas.Faas/TestRunCode",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FaasServer).TestRunCode(ctx, req.(*TestRunCodeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Faas_ServiceDesc is the grpc.ServiceDesc for Faas service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -315,6 +347,10 @@ var Faas_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "HttpCallTask",
 			Handler:    _Faas_HttpCallTask_Handler,
+		},
+		{
+			MethodName: "TestRunCode",
+			Handler:    _Faas_TestRunCode_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -15,4 +15,5 @@ service Faas {
   rpc UpdateFaasTaskByID (UpdateFaasTaskByIDRequest) returns (UpdateFaasTaskByIDReply) {}
   rpc RunTask (RunTaskRequest) returns (RunTaskReply) {}
   rpc HttpCallTask (HttpCallTaskRequest) returns (HttpCallTaskReply) {}
+  rpc TestRunCode (TestRunCodeRequest) returns (TestRunCodeReply) {}
 }

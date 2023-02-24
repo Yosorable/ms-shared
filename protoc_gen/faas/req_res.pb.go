@@ -678,6 +678,108 @@ func (x *HttpCallTaskReply) GetResult() string {
 	return ""
 }
 
+type TestRunCodeRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	FunctionCode string  `protobuf:"bytes,1,opt,name=function_code,json=functionCode,proto3" json:"function_code,omitempty"`
+	Params       *string `protobuf:"bytes,2,opt,name=params,proto3,oneof" json:"params,omitempty"`
+}
+
+func (x *TestRunCodeRequest) Reset() {
+	*x = TestRunCodeRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_protos_faas_req_res_proto_msgTypes[12]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TestRunCodeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TestRunCodeRequest) ProtoMessage() {}
+
+func (x *TestRunCodeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_protos_faas_req_res_proto_msgTypes[12]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TestRunCodeRequest.ProtoReflect.Descriptor instead.
+func (*TestRunCodeRequest) Descriptor() ([]byte, []int) {
+	return file_protos_faas_req_res_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *TestRunCodeRequest) GetFunctionCode() string {
+	if x != nil {
+		return x.FunctionCode
+	}
+	return ""
+}
+
+func (x *TestRunCodeRequest) GetParams() string {
+	if x != nil && x.Params != nil {
+		return *x.Params
+	}
+	return ""
+}
+
+type TestRunCodeReply struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Result *string `protobuf:"bytes,1,opt,name=result,proto3,oneof" json:"result,omitempty"`
+}
+
+func (x *TestRunCodeReply) Reset() {
+	*x = TestRunCodeReply{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_protos_faas_req_res_proto_msgTypes[13]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TestRunCodeReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TestRunCodeReply) ProtoMessage() {}
+
+func (x *TestRunCodeReply) ProtoReflect() protoreflect.Message {
+	mi := &file_protos_faas_req_res_proto_msgTypes[13]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TestRunCodeReply.ProtoReflect.Descriptor instead.
+func (*TestRunCodeReply) Descriptor() ([]byte, []int) {
+	return file_protos_faas_req_res_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *TestRunCodeReply) GetResult() string {
+	if x != nil && x.Result != nil {
+		return *x.Result
+	}
+	return ""
+}
+
 var File_protos_faas_req_res_proto protoreflect.FileDescriptor
 
 var file_protos_faas_req_res_proto_rawDesc = []byte{
@@ -761,10 +863,20 @@ var file_protos_faas_req_res_proto_rawDesc = []byte{
 	0x61, 0x73, 0x6b, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x12, 0x1b, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x75,
 	0x6c, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x48, 0x00, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75,
 	0x6c, 0x74, 0x88, 0x01, 0x01, 0x42, 0x09, 0x0a, 0x07, 0x5f, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74,
-	0x42, 0x30, 0x5a, 0x2e, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x59,
-	0x6f, 0x73, 0x6f, 0x72, 0x61, 0x62, 0x6c, 0x65, 0x2f, 0x6d, 0x73, 0x2d, 0x73, 0x68, 0x61, 0x72,
-	0x65, 0x64, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x5f, 0x67, 0x65, 0x6e, 0x2f, 0x66, 0x61,
-	0x61, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x22, 0x61, 0x0a, 0x12, 0x54, 0x65, 0x73, 0x74, 0x52, 0x75, 0x6e, 0x43, 0x6f, 0x64, 0x65, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x23, 0x0a, 0x0d, 0x66, 0x75, 0x6e, 0x63, 0x74, 0x69,
+	0x6f, 0x6e, 0x5f, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x66,
+	0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x1b, 0x0a, 0x06, 0x70,
+	0x61, 0x72, 0x61, 0x6d, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x48, 0x00, 0x52, 0x06, 0x70,
+	0x61, 0x72, 0x61, 0x6d, 0x73, 0x88, 0x01, 0x01, 0x42, 0x09, 0x0a, 0x07, 0x5f, 0x70, 0x61, 0x72,
+	0x61, 0x6d, 0x73, 0x22, 0x3a, 0x0a, 0x10, 0x54, 0x65, 0x73, 0x74, 0x52, 0x75, 0x6e, 0x43, 0x6f,
+	0x64, 0x65, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x12, 0x1b, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c,
+	0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x48, 0x00, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c,
+	0x74, 0x88, 0x01, 0x01, 0x42, 0x09, 0x0a, 0x07, 0x5f, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x42,
+	0x30, 0x5a, 0x2e, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x59, 0x6f,
+	0x73, 0x6f, 0x72, 0x61, 0x62, 0x6c, 0x65, 0x2f, 0x6d, 0x73, 0x2d, 0x73, 0x68, 0x61, 0x72, 0x65,
+	0x64, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x5f, 0x67, 0x65, 0x6e, 0x2f, 0x66, 0x61, 0x61,
+	0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -779,7 +891,7 @@ func file_protos_faas_req_res_proto_rawDescGZIP() []byte {
 	return file_protos_faas_req_res_proto_rawDescData
 }
 
-var file_protos_faas_req_res_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
+var file_protos_faas_req_res_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
 var file_protos_faas_req_res_proto_goTypes = []interface{}{
 	(*CreateFaasTaskRequest)(nil),     // 0: faas.CreateFaasTaskRequest
 	(*CreateFaasTaskReply)(nil),       // 1: faas.CreateFaasTaskReply
@@ -793,11 +905,13 @@ var file_protos_faas_req_res_proto_goTypes = []interface{}{
 	(*UpdateFaasTaskByIDReply)(nil),   // 9: faas.UpdateFaasTaskByIDReply
 	(*HttpCallTaskRequest)(nil),       // 10: faas.HttpCallTaskRequest
 	(*HttpCallTaskReply)(nil),         // 11: faas.HttpCallTaskReply
-	(*FaasTask)(nil),                  // 12: faas.FaasTask
+	(*TestRunCodeRequest)(nil),        // 12: faas.TestRunCodeRequest
+	(*TestRunCodeReply)(nil),          // 13: faas.TestRunCodeReply
+	(*FaasTask)(nil),                  // 14: faas.FaasTask
 }
 var file_protos_faas_req_res_proto_depIdxs = []int32{
-	12, // 0: faas.GetFaasTaskByPageReply.faas_tasks:type_name -> faas.FaasTask
-	12, // 1: faas.GetFaasTaskByIDReply.faas_task:type_name -> faas.FaasTask
+	14, // 0: faas.GetFaasTaskByPageReply.faas_tasks:type_name -> faas.FaasTask
+	14, // 1: faas.GetFaasTaskByIDReply.faas_task:type_name -> faas.FaasTask
 	2,  // [2:2] is the sub-list for method output_type
 	2,  // [2:2] is the sub-list for method input_type
 	2,  // [2:2] is the sub-list for extension type_name
@@ -956,6 +1070,30 @@ func file_protos_faas_req_res_proto_init() {
 				return nil
 			}
 		}
+		file_protos_faas_req_res_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TestRunCodeRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_protos_faas_req_res_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TestRunCodeReply); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	file_protos_faas_req_res_proto_msgTypes[0].OneofWrappers = []interface{}{}
 	file_protos_faas_req_res_proto_msgTypes[2].OneofWrappers = []interface{}{}
@@ -964,13 +1102,15 @@ func file_protos_faas_req_res_proto_init() {
 	file_protos_faas_req_res_proto_msgTypes[8].OneofWrappers = []interface{}{}
 	file_protos_faas_req_res_proto_msgTypes[10].OneofWrappers = []interface{}{}
 	file_protos_faas_req_res_proto_msgTypes[11].OneofWrappers = []interface{}{}
+	file_protos_faas_req_res_proto_msgTypes[12].OneofWrappers = []interface{}{}
+	file_protos_faas_req_res_proto_msgTypes[13].OneofWrappers = []interface{}{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_protos_faas_req_res_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   12,
+			NumMessages:   14,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

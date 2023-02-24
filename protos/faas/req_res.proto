@@ -63,3 +63,12 @@ message HttpCallTaskRequest {
 message HttpCallTaskReply {
   optional string result = 1;
 }
+
+message TestRunCodeRequest {
+  string function_code = 1;
+  optional string params = 2;
+}
+
+message TestRunCodeReply {
+  optional string result = 1;
+}
